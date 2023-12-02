@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    restart: on-failure
+    container_name: stock-trading-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: "postgres -c 'max_connections=500'"
+    environment:
+      POSTGRES_DB: stock_trading_backend_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: local123!
+    ports:
+      - "5433:5433"
+  stock-trading-rails:
+    build: .
+    command: "bundle exec rails s -p 3000 -b '0.0.0.0'"
+    environment:
+      DB_HOST: db
+      DB_NAME: stock_trading_backend_development
+      DB_USERNAME: postgres
+      DB_PASSWORD: local123!
+    volumes:
+      - .:/app:cached
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+volumes:
+  postgres_data: {}

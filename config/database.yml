@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DB_HOST") { localhost } %>
+  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
+  username: <%= ENV.fetch("DB_USERNAME") { postgres } %>
+  password: <%= ENV.fetch("DB_PASSWORD") { '' } %>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("DB_NAME") %>
+
+test:
+  <<: *default
+  database: stock_trading_backend_test
+
+production:
+  <<: *default
+  database: stock_trading_backend_production
+  username: stock_trading_backend
+  password: <%= ENV["STOCK_TRADING_BACKEND_DATABASE_PASSWORD"] %>
