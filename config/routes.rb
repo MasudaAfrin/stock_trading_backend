@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :businesses, only: %i[index create]
+      resources :stock_trades, path: '/stock-trades', only: %i[index create] do
+        put '/accept/:id'
+        put '/reject/:id'
+      end
     end
   end
-
 end
