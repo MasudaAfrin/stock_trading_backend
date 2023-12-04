@@ -5,6 +5,7 @@ class User < ApplicationRecord
   # Association
   has_many :businesses
   has_many :stock_trades, foreign_key: :buyer_id
+  has_many :stock_requests, through: :businesses, source: :stock_trades
 
   # validation
   validates :name, :email, presence: true
