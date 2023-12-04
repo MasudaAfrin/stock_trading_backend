@@ -1,6 +1,7 @@
 class Business < ApplicationRecord
   # Association
   belongs_to :user
+  has_many :stock_trades
 
   validates :name, :shares_available, presence: true
   validates :shares_available, :numericality => { :greater_than_or_equal_to => 0 }
