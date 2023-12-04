@@ -9,3 +9,8 @@ user = User.find_or_create_by!(email: 'john@stock.com',
                                name: 'John Doe')
 user.update!(password: 'pass123456@')
 p "User is created #{user.email}"
+
+user_two = User.find_or_create_by!(email: 'smith@stock.com',
+                                   name: 'Sam Smith')
+user_two.update!(password: 'pass123456@')
+p "User is created #{user_two.email}"
