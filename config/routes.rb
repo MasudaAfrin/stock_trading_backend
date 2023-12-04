@@ -7,8 +7,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :businesses, only: %i[index create]
       resources :stock_trades, path: '/stock-trades', only: %i[index create] do
-        put '/accept/:id'
-        put '/reject/:id'
+        put '/accept' => 'stock_trades#accept'
+        put '/reject' => 'stock_trades#reject'
       end
     end
   end
