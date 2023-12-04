@@ -3,7 +3,7 @@ module Api
     class StockTradesController < ApplicationController
       def index
         stock_trades = @current_user.stock_requests.order(id: :desc)
-        render json: success_response(stock_trades, 'Trade request is sent successfully'),
+        render json: stock_trades, each_serializer: StockTradeSerializer,
                status: :ok
       rescue => e
         Rails.logger.error("Stock trade fetch failed due to #{e.full_message}")

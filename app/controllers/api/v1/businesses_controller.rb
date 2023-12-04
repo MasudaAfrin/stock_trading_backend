@@ -3,7 +3,8 @@ module Api
     class BusinessesController < ApplicationController
       def index
         businesses = Business.available_shares(@current_user)
-        render json: success_response(businesses, 'Successfully business share fetched'),
+        render json: businesses,
+               each_serializer: BusinessSerializer,
                status: :ok
       rescue => e
         Rails.logger.error("Business shares fetch failed due to #{e.full_message}")
@@ -13,7 +14,7 @@ module Api
       def show
         business = Business.find(params[:id])
         histories = business.stock_trades.accepted.order(id: :desc)
-        render json: success_response(histories, 'Successfully business shares fetched'),
+        render json: histories, each_serializer: StockTradeSerializer,
                status: :ok
       rescue => e
         Rails.logger.error("Business shares fetch failed due to #{e.full_message}")
